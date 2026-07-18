@@ -62,4 +62,42 @@ class SeekerProfileModel(models.Model):
     
     def __str__(self):
       return f'{self.name}'
+  
+  
+
+# (Title, Number of openings, Category, Job description, Skills set
+class CategoryModel(models.Model):
+    name = models.CharField(max_length=200, null=True)
+    
+    def __str__(self):
+      return f'{self.name}'
+
+
+class JobPostModel(models.Model):
+    
+    # relation field
+    posted_by = models.ForeignKey(
+        RecruiterProfileModel,
+        on_delete=models.CASCADE,
+        related_name='job_post_info',
+        null=True
+    )
+    
+    title = models.CharField(max_length=200, null=True)
+    number_of_openings = models.PositiveIntegerField(null=True)
+    category = models.ForeignKey(
+        CategoryModel,
+        on_delete=models.CASCADE,
+        null=True
+    )
+    description = models.TextField(null=True)
+    skills_set = models.TextField(null=True)
+    deadline = models.DateField(null=True)
+    salary = models.FloatField(null=True)
+    
+    created_at = models.DateField(auto_now_add=True, null=True)
+    updated_at = models.DateField(auto_now=True, null=True)
+    
+    def __str__(self):
+      return f'{self.title}'
     
