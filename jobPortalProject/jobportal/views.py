@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
 from jobportal.models import *
 from jobportal.forms import *
@@ -51,7 +52,15 @@ def login_view(request):
     
     return render(request, 'master/base-form.html', context)
 
-
+@login_required
 def dashboard_view(request):
     
     return render(request, 'dashboard.html')
+
+
+@login_required
+def logout_view(request):
+    
+    logout(request)
+    
+    return redirect('login_view')
