@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, logout
 from jobportal.models import *
 from jobportal.forms import *
 from django.contrib import messages
@@ -27,11 +29,29 @@ def register_view(request):
 
 def login_view(request):
     
+    if request.method == "POST":
+        form_data = AuthenticationForm(request, request.POST)
+        if form_data.is_valid():
+            user = form_data.get_user()
+            if user:
+                login(request, user)
+                messages.success(request, 'User Login Successfully.')
+                return redirect('dashboard_view')
+            
+        messages.error(request, 'Invalid Credentials.')
+    
+    form_data = AuthenticationForm()
+    
     context ={
-        # 'form_data':form_data,
+        'form_data':form_data,
         'title':"Login Page",
         'form_title': 'User Login Form',
         'form_btn': 'Login',
     }
     
     return render(request, 'master/base-form.html', context)
+
+
+def dashboard_view(request):
+    
+    return render(request, 'dashboard.html')
