@@ -5,6 +5,7 @@
 
 {% block content %}
 {% load crispy_forms_tags %}
+
 <h3>{{form_title}}</h3>
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}

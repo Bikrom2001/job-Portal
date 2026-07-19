@@ -1,8 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from jobportal.models import *
 from jobportal.forms import *
+from django.contrib import messages
 
 def register_view(request):
+    
+    if request.method == 'POST':
+        form_data = RegisterForm(request.POST)
+        if form_data.is_valid():
+            form_data.save()
+            messages.success(request, 'User Creation Successfully.')
+            return redirect('login_view')
+        
     
     form_data = RegisterForm()
     
@@ -11,6 +20,18 @@ def register_view(request):
         'title':"Register Page",
         'form_title': 'User Registration Form',
         'form_btn': 'Register',
+    }
+    
+    return render(request, 'master/base-form.html', context)
+
+
+def login_view(request):
+    
+    context ={
+        # 'form_data':form_data,
+        'title':"Login Page",
+        'form_title': 'User Login Form',
+        'form_btn': 'Login',
     }
     
     return render(request, 'master/base-form.html', context)
