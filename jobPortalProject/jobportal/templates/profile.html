@@ -12,6 +12,9 @@
     <p>
         User Types:{{request.user.user_type}}
     </p>
+    <p>
+        Company Name : {{request.user.recruiter_profile.company_name}}
+    </p>
     <a href="{% url 'update_profile_view' %}" class="btn btn-primary">Update Profile</a>
 {% endblock content %}
     

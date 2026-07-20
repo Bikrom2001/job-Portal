@@ -74,20 +74,40 @@ def profile_view(request):
 
 @login_required
 def update_profile_view(request):
-    
     current_user = request.user
-    
     if current_user.user_type == 'Recruiter':
-        form_data = RecruiterProfileUpdateForm()
+        try:
+            profile_data = RecruiterProfileModel.objects.get(recruiter= current_user)
+        except:
+            profile_data = None
+        if request.method == 'POST':
+            form_data = RecruiterProfileUpdateForm(request.POST, request.FILES, instance=profile_data)
+            if form_data.is_valid():
+                data = form_data.save(commit=False)
+                data.recruiter = current_user
+                data.save()
+                messages.success(request, 'Profile Updated Successfully.')
+                return redirect('profile_view')
+        form_data = RecruiterProfileUpdateForm(instance=profile_data)
     else:
-        form_data = SeekerProfileUpdateForm()
-    
-    
+        try:
+            profile_data = SeekerProfileModel.objects.get(seeker = current_user)
+        except:
+            profile_data = None
+        if request.method == 'POST':
+            form_data = SeekerProfileUpdateForm(request.POST, request.FILES, instance=profile_data)
+            if form_data.is_valid():
+                data = form_data.save(commit=False)
+                data.seeker = current_user
+                data.save()
+                messages.success(request, 'Profile Updated Successfully.')
+                return redirect('profile_view')
+        form_data = SeekerProfileUpdateForm(instance=profile_data)
+
     context = {
         'form_data': form_data,
         'title': 'Update Profile Info Page',
         'form_title': 'Update Profile Info Form',
         'form_btn': 'Update Profile',
     }
-    
     return render(request, 'master/base-form.html', context)
