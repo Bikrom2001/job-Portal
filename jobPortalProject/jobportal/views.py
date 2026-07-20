@@ -66,7 +66,7 @@ def logout_view(request):
     return redirect('login_view')
 
 
-
+@login_required
 def profile_view(request):
     
     return render(request, 'profile.html')
@@ -110,4 +110,23 @@ def update_profile_view(request):
         'form_title': 'Update Profile Info Form',
         'form_btn': 'Update Profile',
     }
+    return render(request, 'master/base-form.html', context)
+
+
+@login_required
+def browse_job_view(request):
+    
+    return render(request,'browse-jobs.html')
+
+
+@login_required
+def post_job_view(request):
+    
+    context = {
+        # 'form_data': form_data,
+        'title': 'Post Job Page',
+        'form_title': 'Post Job Info Form',
+        'form_btn': 'Post',
+    }
+    
     return render(request, 'master/base-form.html', context)
