@@ -4,13 +4,13 @@
 {% block content %}
     <h3>Profile Info</h3>
     <p>
-        Name:
+        Name: {{request.user.display_name}}
     </p>
     <p>
-        Email:
+        Email: {{request.user.email}}
     </p>
     <p>
-        User Types:
+        User Types:{{request.user.user_type}}
     </p>
     <a href="{% url 'update_profile_view' %}" class="btn btn-primary">Update Profile</a>
 {% endblock content %}

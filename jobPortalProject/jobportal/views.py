@@ -75,9 +75,16 @@ def profile_view(request):
 @login_required
 def update_profile_view(request):
     
+    current_user = request.user
+    
+    if current_user.user_type == 'Recruiter':
+        form_data = RecruiterProfileUpdateForm()
+    else:
+        form_data = SeekerProfileUpdateForm()
+    
     
     context = {
-        # 'form_data': form_data,
+        'form_data': form_data,
         'title': 'Update Profile Info Page',
         'form_title': 'Update Profile Info Form',
         'form_btn': 'Update Profile',

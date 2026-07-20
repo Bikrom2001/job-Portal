@@ -7,3 +7,20 @@ class RegisterForm(UserCreationForm):
   class Meta:
     model = User
     fields = ['username','display_name', 'email','user_type', 'password1','password2']
+    
+    
+  
+  
+class SeekerProfileUpdateForm(forms.ModelForm):
+  
+  class Meta:
+    model = SeekerProfileModel
+    fields = '__all__'
+    exclude = ['seeker']
+  
+  
+class RecruiterProfileUpdateForm(forms.ModelForm):
+  class Meta:
+    model = RecruiterProfileModel
+    fields = '__all__'
+    exclude = ['recruiter']
