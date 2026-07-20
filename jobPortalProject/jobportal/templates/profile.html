@@ -1,0 +1,17 @@
+{% extends 'master/base.html' %}
+
+
+{% block content %}
+    <h3>Profile Info</h3>
+    <p>
+        Name:
+    </p>
+    <p>
+        Email:
+    </p>
+    <p>
+        User Types:
+    </p>
+    <a href="{% url 'update_profile_view' %}" class="btn btn-primary">Update Profile</a>
+{% endblock content %}
+    

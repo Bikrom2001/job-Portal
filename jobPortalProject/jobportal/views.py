@@ -64,3 +64,23 @@ def logout_view(request):
     logout(request)
     
     return redirect('login_view')
+
+
+
+def profile_view(request):
+    
+    return render(request, 'profile.html')
+
+
+@login_required
+def update_profile_view(request):
+    
+    
+    context = {
+        # 'form_data': form_data,
+        'title': 'Update Profile Info Page',
+        'form_title': 'Update Profile Info Form',
+        'form_btn': 'Update Profile',
+    }
+    
+    return render(request, 'master/base-form.html', context)
