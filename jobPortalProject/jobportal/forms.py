@@ -24,3 +24,15 @@ class RecruiterProfileUpdateForm(forms.ModelForm):
     model = RecruiterProfileModel
     fields = '__all__'
     exclude = ['recruiter']
+    
+
+class JobPostForm(forms.ModelForm):
+  class Meta:
+    model = JobPostModel
+    fields = '__all__'
+    exclude = ['posted_by']
+    widgets = {
+        'deadline': forms.DateInput(attrs={
+            'type': 'date'
+        })
+    }
