@@ -239,3 +239,19 @@ def my_application(request):
     }
     
     return render(request, 'my-applications.html', context)
+
+
+
+def candidate_list_view(request, id):
+    
+    job_data = JobPostModel.objects.get(id=id)
+    candidate_data = ApplyJobModel.objects.filter(applied_job=job_data)
+    
+
+    
+    context = {
+        'candidate_data': candidate_data,
+        'job_data': job_data,
+        'title': 'Candidate List Page',
+    }
+    return render(request,'candidate-list.html',context)
