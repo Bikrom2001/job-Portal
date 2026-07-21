@@ -116,7 +116,18 @@ def update_profile_view(request):
 @login_required
 def browse_job_view(request):
     
-    return render(request,'browse-jobs.html')
+    current_user = request.user
+    if current_user.user_type == 'Recruiter':
+        job_data = JobPostModel.objects.filter(posted_by = current_user.recruiter_profile)
+    else:
+        job_data = JobPostModel.objects.all()
+    
+    context = {
+        'job_data': job_data
+    }
+    
+    
+    return render(request,'browse-jobs.html', context)
 
 
 @login_required
