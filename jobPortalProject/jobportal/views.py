@@ -215,7 +215,7 @@ def apply_job_view(request, id):
             data.applied_job = job
             data.save()
             messages.success(request, 'Application submit successfully.')
-            return redirect('browse_job_view')
+            return redirect('my_application')
     
     form_data = ApplyJobForm()
     context = {
@@ -225,3 +225,17 @@ def apply_job_view(request, id):
         'form_btn': 'Apply',
     }
     return render(request, 'master/base-form.html', context)
+
+
+def my_application(request):
+    
+    my_application = ApplyJobModel.objects.filter(applied_by = request.user.seeker_profile)
+    
+    context = {
+        'application_list': my_application,
+        'title': 'My Application Page',
+        'form_title': 'Apply Job Info Form',
+        'form_btn': 'Apply',
+    }
+    
+    return render(request, 'my-applications.html', context)
