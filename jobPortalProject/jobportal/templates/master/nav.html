@@ -8,14 +8,14 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         
 
-        
+        <li class="nav-item">
+          <a class="nav-link " href="{% url 'browse_job_view' %}">Browse Jobs</a>
+        </li>
         {% if request.user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link " href="{% url 'dashboard_view' %}">Dashboard</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link " href="{% url 'browse_job_view' %}">Browse Jobs</a>
-        </li>
+        
         <li class="nav-item">
           <a class="nav-link " href="{% url 'profile_view' %}">Profile</a>
         </li>

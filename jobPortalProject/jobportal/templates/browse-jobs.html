@@ -4,7 +4,13 @@
 {% block content %}
     <h3>browse Jobs</h3>
 
-    <a href="{% url 'post_job_view' %}" class="btn btn-success">Post Jobs</a>
+    {% if request.user.user_type == 'Recruiter' %}
+
+        <a href="{% url 'post_job_view' %}" class="btn btn-success">Post Jobs</a>
+                
+    {% endif %}
+
+    
 
     {% for job in job_data %}
   <div class="card border-0 shadow-sm rounded-4 mb-4 job-card">
@@ -61,7 +67,9 @@
         <!-- Buttons -->
         <div class="col-lg-3 col-md-3 text-md-end mt-3 mt-md-0">
 
-          <a href="{% url 'update_job_view' job.id %}"
+            
+            {% if request.user.user_type == 'Recruiter' %}
+            <a href="{% url 'update_job_view' job.id %}"
              class="btn btn-warning rounded-pill px-4 mb-2 w-100">
             <i class="bi bi-pencil-square"></i>
             Edit
@@ -72,6 +80,24 @@
             <i class="bi bi-trash"></i>
             Delete
           </a>
+                
+            {% endif %}
+
+            <a href=""
+              class="btn btn-outline-primary rounded-pill px-4 mb-2 w-100">
+                <i class="bi bi-eye"></i>
+                View Details
+            </a>
+
+        <a href=""
+        class="btn btn-success rounded-pill px-4 w-100">
+            <i class="bi bi-send-check"></i>
+            Apply Now
+        </a>
+                
+
+
+          
 
         </div>
 
