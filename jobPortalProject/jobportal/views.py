@@ -186,3 +186,14 @@ def update_job_view(request, id):
         'form_btn': 'Update',
     }
     return render(request, 'master/base-form.html', context)
+
+
+@login_required
+def delete_job_view(request, id):
+    try:
+        JobPostModel.objects.get(id = id).delete()
+        messages.error(request, 'Job Deleted successfully.')
+        return redirect('browse_job_view')
+    except:
+        messages.error(request, 'Job Not Found.')
+        return redirect('browse_job_view')
