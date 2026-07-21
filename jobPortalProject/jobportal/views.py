@@ -201,9 +201,25 @@ def delete_job_view(request, id):
 @login_required
 def apply_job_view(request, id):
     
+    try:
+        seeker_profile = request.user.seeker_profile
+        job = JobPostModel.objects.get(id=id)
+    except:
+        messages.error(request, 'Please, Update your profile first.')
+        return redirect('update_profile_view')
+    if request.method == 'POST':
+        form_data = ApplyJobForm(request.POST, request.FILES)
+        if form_data.is_valid():
+            data = form_data.save(commit=False)
+            data.applied_by = seeker_profile
+            data.applied_job = job
+            data.save()
+            messages.success(request, 'Application submit successfully.')
+            return redirect('browse_job_view')
     
+    form_data = ApplyJobForm()
     context = {
-        # 'form_data': form_data,
+        'form_data': form_data,
         'title': 'Apply Job Page',
         'form_title': 'Apply Job Info Form',
         'form_btn': 'Apply',
