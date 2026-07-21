@@ -36,3 +36,9 @@ class JobPostForm(forms.ModelForm):
             'type': 'date'
         })
     }
+    
+
+class ApplyJobForm(forms.ModelForm):
+  class Meta:
+    model = ApplyJobModel
+    fields = ['resume']

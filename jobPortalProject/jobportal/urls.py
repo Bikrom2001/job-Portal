@@ -17,6 +17,9 @@ urlpatterns = [
     path('post-job/',post_job_view,name='post_job_view'),
     path('update-job/<str:id>/',update_job_view,name='update_job_view'),
     path('delete-job/<str:id>/',delete_job_view,name='delete_job_view'),
+    
+    
+    path('apply-job/<str:id>/',apply_job_view,name='apply_job_view'),
 ]
 
 

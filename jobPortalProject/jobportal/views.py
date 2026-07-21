@@ -195,3 +195,17 @@ def delete_job_view(request, id):
     except:
         messages.error(request, 'Job Not Found.')
         return redirect('browse_job_view')
+
+
+
+@login_required
+def apply_job_view(request, id):
+    
+    
+    context = {
+        # 'form_data': form_data,
+        'title': 'Apply Job Page',
+        'form_title': 'Apply Job Info Form',
+        'form_btn': 'Apply',
+    }
+    return render(request, 'master/base-form.html', context)
