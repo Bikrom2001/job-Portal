@@ -15,6 +15,7 @@ urlpatterns = [
     
     path('browse-job/',browse_job_view, name='browse_job_view'),
     path('post-job/',post_job_view,name='post_job_view'),
+    path('update-job/<str:id>/',update_job_view,name='update_job_view'),
 ]
 
 

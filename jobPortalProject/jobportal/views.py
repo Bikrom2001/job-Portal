@@ -158,3 +158,31 @@ def post_job_view(request):
     }
     
     return render(request, 'master/base-form.html', context)
+
+
+@login_required
+def update_job_view(request, id):
+    try:
+        recruiter_data = request.user.recruiter_profile
+        job = JobPostModel.objects.get(id = id)
+    except:
+        messages.error(request, 'Please, Update your profile first.')
+        return redirect('update_profile_view')
+
+    if request.method == 'POST':
+        form_data = JobPostForm(request.POST, request.FILES, instance=job)
+        if form_data.is_valid():
+            data = form_data.save(commit=False)
+            data.posted_by = recruiter_data
+            data.save()
+            messages.success(request, 'Job Updated Successfully.')
+            return redirect('browse_job_view')
+
+    form_data = JobPostForm(instance=job)
+    context = {
+        'form_data': form_data,
+        'title': 'Update Job Page',
+        'form_title': 'Update Job Info Form',
+        'form_btn': 'Update',
+    }
+    return render(request, 'master/base-form.html', context)
