@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
 from jobportal.models import *
@@ -117,11 +118,23 @@ def update_profile_view(request):
 def browse_job_view(request):
     current_user = request.user
     
+    search_query = request.GET.get('search_query')
+   
+    
     if not current_user:
         if current_user.user_type == 'Recruiter':
             job_data = JobPostModel.objects.filter(posted_by = current_user.recruiter_profile)
 
     job_data = JobPostModel.objects.all()
+    
+    
+    if search_query:
+        job_data = JobPostModel.objects.filter(
+            Q(title__icontains = search_query)|
+            Q(category__name__icontains = search_query) |
+            Q(posted_by__company_name__icontains = search_query)
+        )
+    
     context = {
         'job_data': job_data
     }

@@ -10,6 +10,11 @@
                 
     {% endif %}
 
+    <form class="d-flex mt-3 mb-3" role="search" method="GET" action="{% url 'browse_job_view' %}">
+        <input class="form-control me-2" type="text" name="search_query" placeholder="Search for Title, Company Name, Category" aria-label="Search"/>
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+
     
 
     {% for job in job_data %}
