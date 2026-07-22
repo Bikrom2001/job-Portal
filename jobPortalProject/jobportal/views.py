@@ -56,7 +56,27 @@ def login_view(request):
 @login_required
 def dashboard_view(request):
     
-    return render(request, 'dashboard.html')
+    try:
+        seeker_data = request.user.seeker_profile
+    except:
+        messages.error(request, 'Please, Update your profile first.')
+        return redirect('update_profile_view')
+    
+    
+    job_data = JobPostModel.objects.none()
+    if request.user.user_type == 'Seeker':
+        seeker_skill = request.user.seeker_profile.skills_set
+        
+        for skill in seeker_skill.split(','):
+            
+            cleaned_skill = skill.strip()
+            job_data |= JobPostModel.objects.filter(skills_set__icontains = cleaned_skill)
+           
+    context = {
+        "job_data": job_data
+    }
+    
+    return render(request, 'dashboard.html', context)
 
 
 @login_required
