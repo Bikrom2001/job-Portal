@@ -117,24 +117,25 @@ def update_profile_view(request):
 
 def browse_job_view(request):
     current_user = request.user
-    
+    print(current_user)
     search_query = request.GET.get('search_query')
-   
-    
-    if not current_user:
-        if current_user.user_type == 'Recruiter':
-            job_data = JobPostModel.objects.filter(posted_by = current_user.recruiter_profile)
 
     job_data = JobPostModel.objects.all()
-    
-    
+    print("browse job: ", job_data)
+
+    if  current_user.is_authenticated:
+        if current_user.user_type == 'Recruiter':
+            try:
+                job_data = JobPostModel.objects.filter(posted_by = current_user.recruiter_profile)
+            except:
+                messages.error(request, 'Please, Update your profile first.')
+                return redirect('update_profile_view')
     if search_query:
         job_data = JobPostModel.objects.filter(
-            Q(title__icontains = search_query)|
+            Q(title__icontains = search_query) |
             Q(category__name__icontains = search_query) |
             Q(posted_by__company_name__icontains = search_query)
         )
-    
     context = {
         'job_data': job_data
     }
